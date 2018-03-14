@@ -37,7 +37,7 @@ The goals / steps of this project are the following:
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
-You're reading it! Please find the intermediate output images for all test images [here]
+You're reading it! Please find the intermediate output images for all test images [here](https://github.com/AkshathaHolla91/CarND-Vehicle-Detection/tree/master/output_images)
 
 ### Histogram of Oriented Gradients (HOG)
 
@@ -77,7 +77,7 @@ Here I have used a Linear support vector machine classifier(sklearn's LinearSVC)
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I have implemented the hog sub sampling window search in code cell 15 of my jupyter notebbok in the find_cars_with_heatmap function. Here I am passing the ystart and ystop positions ie  the  region of the image over which the search for vehicle has to be done(region of image having lane , in this case 400 to 656 along y) and also a list of the scales. Here I have chosen 4 scales in the range of 1 to 2.5 with a difference of 0.5 to make sure that cars are detected at most scales when the search is happening. Here I have chosen a window size of 64 8x8 cells with 8 pixels per cell and 2 cells per block. This method extracts the hog features once, for each of a small set of window sizes , and then can be sub-sampled to get all of its overlaying windows. Each window is defined by a scaling factor that impacts the window size which changes according to the provided list. Here the overlap of each window can be defined in terms of cells per step  which I have taken as 2. The hog features , spatial features and hist features are later calculated for each identified window and  fed to a classifer to make a prediction  to identify whether a car/ vehicle has been identified. If it is found a box is drawn according to the calculated positions in the window and is repeated for all windows and all steps as seen in the code until a list of boxes identifying the cars in the image are obtained.
+I have implemented the hog sub sampling window search in code cell 15 of my jupyter notebook in the find_cars_with_heatmap function. Here I am passing the ystart and ystop positions ie  the  region of the image over which the search for vehicle has to be done(region of image having lane , in this case 400 to 656 along y) and also a list of the scales. Here I have chosen 4 scales in the range of 1 to 2.5 with a difference of 0.5 to make sure that cars are detected at most scales when the search is happening. Here I have chosen a window size of 64 8x8 cells with 8 pixels per cell and 2 cells per block. This method extracts the hog features once, for each of a small set of window sizes , and then can be sub-sampled to get all of its overlaying windows. Each window is defined by a scaling factor that impacts the window size which changes according to the provided list. Here the overlap of each window can be defined in terms of cells per step  which I have taken as 2. The hog features , spatial features and hist features are later calculated for each identified window and  fed to a classifer to make a prediction  to identify whether a car/ vehicle has been identified. If it is found a box is drawn according to the calculated positions in the window and is repeated for all windows and all steps as seen in the code until a list of boxes identifying the cars in the image are obtained.
 
 The image below shows the result of the hog sub sampling search applied on a test image. Here we can see multiple predictions for the cars which were calculated in various windows.
 
@@ -100,7 +100,7 @@ Initially I used heatmaps to get the hot areas (areas with multiple positive pre
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](https://github.com/AkshathaHolla91/CarND-Vehicle-Detection/blob/master/final_video_output.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -125,7 +125,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-While building the pipeline I initially tried training my classifier while using the RGB colorspace which led to detection of multiple false positives because of which I had to change the colorspace which eventually led me to use a different colorspace which was YCrCb. I also tried using the sliding window approach for searching the image and making the predictions which turned out to be slow and inefficient. I later changed that to hog sub sampling search which was faster and more efficient. After training my linear SVM with the entire data set , the video result that I got still had some inconsistencies in terms of maintaining the shape of the bounding box which was fluctuating a lot. I later fixed this by maintaining the values of detected boxes of the previous 8 frames and passing it to the heatmap function to maintain proper continuity and smoothness in detection of the vehicle.It also took a lot of time to create the final output video due to limited hardware capability since I am using a pentium processor.
+While building the pipeline I initially tried training my classifier while using the RGB colorspace which led to detection of multiple false positives because of which I had to change the colorspace which eventually led me to use a different colorspace which was YCrCb. I also tried using the sliding window approach for searching the image and making the predictions which turned out to be slow and inefficient. I later changed that to hog sub sampling search which was faster and more efficient. After training my linear SVM with the entire data set , the video result that I got still had some inconsistencies in terms of maintaining the shape of the bounding box which was fluctuating a lot. I later fixed this by maintaining the values of detected boxes of the previous 8 frames and passing it to the heatmap function to maintain proper continuity and smoothness in detection of the vehicle.  It also took a lot of time to create the final output video due to limited hardware capability since I am using a pentium processor.
 
 Currently the pipeline is able to detect most vehicles in its surroundings with minimal false positives. 
 
